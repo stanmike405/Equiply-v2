@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Equiply - Rent Tools & Equipment</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: Arial, sans-serif; }
+    a { text-decoration: none; }
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px;
+      z-index: 10;
+    }
+    header a {
+      color: white;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    .hero {
+      background: url('background.jpg') center center / cover no-repeat;
+      height: 100vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      background-color: rgba(0,0,0,0.5);
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1;
+    }
+    .hero-content {
+      z-index: 2;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+    .button-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .button {
+      background: #3b82f6;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .button.alt {
+      background: #10b981;
+    }
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .columns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 30px;
+    }
+    .column {
+      flex: 1 1 280px;
+      max-width: 300px;
+    }
+    footer {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#">Login</a>
+    <a href="#">Sign Up</a>
+  </header>
+
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>EQUIPLY</h1>
+      <p>Heavy equipment and tools from local owners, ready when you are.</p>
+      <div class="button-group">
+        <a href="owner.html" class="button">I'm an Owner</a>
+        <a href="renter.html" class="button alt">I'm a Renter</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>How It Works</h2>
+    <div class="columns">
+      <div class="column">
+        <h3>List</h3>
+        <p>Post your equipment in minutes for others to rent.</p>
+      </div>
+      <div class="column">
+        <h3>Rent</h3>
+        <p>Search for what you need near you by zip or county.</p>
+      </div>
+      <div class="column">
+        <h3>Use</h3>
+        <p>Pick up locally or request delivery — fees may apply.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Equiply</h2>
+    <ul style="list-style: none; padding: 0;">
+      <li>Built for contractors, DIYers, and landowners</li>
+      <li>Local tools, local people</li>
+      <li>Make passive income by renting out your gear</li>
+      <li>Safe, verified users and secure payments</li>
+    </ul>
+  </section>
+
+  <section style="background: #f3f4f6;">
+    <h2>Ready to rent or earn?</h2>
+    <p><a href="owner.html" class="button">Get Started</a></p>
+  </section>
+
+  <footer>
+    <p>Instagram: @equiplyapp</p>
+    <p>Email: info@getequiply.com</p>
+    <p>&copy; 2025 Equiply. Built by blue collars, for blue collars.</p>
+  </footer>
+</body>
+</html>
