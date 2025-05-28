@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Find Equipment - Equiply</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f3f4f6; }
+    header { background: #1e3a8a; color: white; padding: 20px; text-align: center; }
+    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; }
+    input[type="text"], button {
+      width: 100%; padding: 12px; margin-top: 10px;
+      border: 1px solid #ccc; border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .listings { display: flex; flex-wrap: wrap; gap: 20px; }
+    .card {
+      flex: 1 1 300px;
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 6px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card h3 {
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    .card p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Find Equipment Near You</h1>
+</header>
+
+<div class="container">
+  <form>
+    <label for="location">Enter Your Location (Zip / County / City):</label>
+    <input type="text" id="location" name="location" placeholder="E.g., 95366 or San Joaquin">
+
+    <label for="search">What do you need?</label>
+    <input type="text" id="search" name="search" placeholder="E.g., Excavator, Swather, Trailer">
+
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="listings">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x180?text=Excavator" alt="Excavator">
+      <h3>John Deere 50G Excavator</h3>
+      <p><strong>Location:</strong> Ripon, CA</p>
+      <p><strong>Rate:</strong> $300/day</p>
+      <p><strong>Delivery:</strong> Available (fees may apply)</p>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x180?text=Trailer" alt="Trailer">
+      <h3>Flatbed Trailer (20ft)</h3>
+      <p><strong>Location:</strong> Manteca, CA</p>
+      <p><strong>Rate:</strong> $100/day</p>
+      <p><strong>Delivery:</strong> Pickup only</p>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x180?text=Concrete+Saw" alt="Concrete Saw">
+      <h3>Stihl TS420 Concrete Saw</h3>
+      <p><strong>Location:</strong> Modesto, CA</p>
+      <p><strong>Rate:</strong> $75/day</p>
+      <p><strong>Delivery:</strong> Available (fees may apply)</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
