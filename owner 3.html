@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Equiply Owner Dashboard (Debug)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; }
+    .hidden { display: none; }
+    .listing { border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    .listing h4 { margin: 0; }
+    .delete-btn { background: #dc2626; color: white; padding: 5px 10px; border: none; margin-top: 5px; }
+    .error { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Owner Portal</h2>
+    <div id="auth-section">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button onclick="login()">Login</button>
+      <button onclick="signup()">Sign Up</button>
+      <div id="auth-error" class="error"></div>
+    </div>
+
+    <div id="post-section" class="hidden">
+      <h3>Post Equipment Listing</h3>
+      <input type="text" id="equipment" placeholder="Equipment Name" />
+      <input type="text" id="location" placeholder="Location (City, State)" />
+      <input type="text" id="rate" placeholder="Rental Rate (e.g. $250/day)" />
+      <input type="text" id="type" placeholder="Type (e.g. Excavator)" />
+      <label><input type="checkbox" id="delivery" /> Delivery Available</label>
+      <button onclick="postListing()">Post Listing</button>
+
+      <h3>Your Listings</h3>
+      <div id="your-listings"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDr7HR_qEWdzmWOJxeHQeeczSpAejcnWLg",
+      authDomain: "equiply-v2.firebaseapp.com",
+      projectId: "equiply-v2",
+      storageBucket: "equiply-v2.appspot.com",
+      messagingSenderId: "348628376880",
+      appId: "1:348628376880:web:d70d009b430ce6a32efcf5",
+      measurementId: "G-TGRWPD1WTG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let currentUser = null;
+
+    function displayError(message) {
+      document.getElementById("auth-error").textContent = message;
+    }
+
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          alert("Signed up successfully");
+          displayError("");
+        })
+        .catch(err => displayError(err.message));
+    }
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          alert("Logged in successfully");
+          displayError("");
+        })
+        .catch(err => displayError(err.message));
+    }
+
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        currentUser = user;
+        document.getElementById("auth-section").classList.add("hidden");
+        document.getElementById("post-section").classList.remove("hidden");
+        loadUserListings();
+      }
+    });
+
+    async function postListing() {
+      await addDoc(collection(db, "listings"), {
+        ownerUID: currentUser.uid,
+        equipment: document.getElementById("equipment").value,
+        location: document.getElementById("location").value,
+        rate: document.getElementById("rate").value,
+        type: document.getElementById("type").value,
+        delivery: document.getElementById("delivery").checked
+      });
+      alert("Listing posted!");
+      loadUserListings();
+    }
+
+    async function loadUserListings() {
+      const q = query(collection(db, "listings"), where("ownerUID", "==", currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const listingsContainer = document.getElementById("your-listings");
+      listingsContainer.innerHTML = "";
+      querySnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const listingDiv = document.createElement("div");
+        listingDiv.className = "listing";
+        listingDiv.innerHTML = `
+          <h4>${data.equipment}</h4>
+          <p>${data.location} | ${data.type}</p>
+          <p>Rate: ${data.rate}</p>
+          <p>${data.delivery ? "🚚 Delivery available" : ""}</p>
+          <button class="delete-btn" onclick="deleteListing('${docSnap.id}')">Delete</button>
+        `;
+        listingsContainer.appendChild(listingDiv);
+      });
+    }
+
+    async function deleteListing(id) {
+      await deleteDoc(doc(db, "listings", id));
+      loadUserListings();
+    }
+  </script>
+</body>
+</html>
